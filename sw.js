@@ -1,11 +1,10 @@
-const CACHE_NAME = 'cake-maker-v1';
+const CACHE_NAME = 'cake-maker-v2';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icons/icon-192x192.png',
-  './icons/icon-512x512.png',
-  'https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&family=Pacifico&display=swap'
+  './icons/icon-512x512.png'
 ];
 
 self.addEventListener('install', e => {
@@ -23,11 +22,18 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
+  // For navigation requests, always serve index.html
+  if (e.request.mode === 'navigate') {
+    e.respondWith(
+      caches.match('./index.html').then(r => r || fetch(e.request))
+    );
+    return;
+  }
   e.respondWith(
     caches.match(e.request).then(cached => {
       if (cached) return cached;
       return fetch(e.request).then(response => {
-        if (!response || response.status !== 200) return response;
+        if (!response || response.status !== 200 || response.type === 'opaque') return response;
         const clone = response.clone();
         caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
         return response;
