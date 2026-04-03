@@ -1,14 +1,20 @@
 {
   "name": "생일 케이크 메이커",
   "short_name": "케이크메이커",
-  "description": "나만의 생일 케이크를 만들어보세요!",
+  "description": "나만의 생일 케이크를 커스터마이징하고 촛불 애니메이션을 즐겨보세요! 8종 케이크, 9종 초, 12종 배경으로 특별한 생일 케이크를 만들 수 있습니다.",
   "start_url": ".",
   "scope": ".",
+  "id": "/birthday-cake-maker",
   "display": "standalone",
+  "display_override": ["standalone", "window-controls-overlay"],
   "background_color": "#FFF5F7",
   "theme_color": "#e8547a",
   "orientation": "portrait",
-  "id": "birthday-cake-maker",
+  "lang": "ko",
+  "dir": "ltr",
+  "categories": ["entertainment", "lifestyle", "utilities"],
+  "iarc_rating_id": "",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "icons/icon-192x192.png",
@@ -34,5 +40,60 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/screenshot-mobile.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "케이크 메이커 메인 화면"
+    },
+    {
+      "src": "screenshots/screenshot-wide.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "케이크 메이커 와이드 화면"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "케이크 만들기",
+      "short_name": "만들기",
+      "description": "새 케이크 만들기 시작",
+      "url": ".",
+      "icons": [
+        {
+          "src": "icons/icon-192x192.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "share_target": {
+    "action": ".",
+    "method": "GET",
+    "params": {
+      "title": "name",
+      "text": "message"
+    }
+  },
+  "handle_links": "preferred",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "protocol_handlers": [
+    {
+      "protocol": "web+cake",
+      "url": "./?type=%s"
+    }
+  ],
+  "file_handlers": [],
+  "widgets": []
 }

@@ -1,10 +1,12 @@
-const CACHE_NAME = 'cake-maker-v2';
+const CACHE_NAME = 'cake-maker-v3';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icons/icon-192x192.png',
-  './icons/icon-512x512.png'
+  './icons/icon-512x512.png',
+  './screenshots/screenshot-mobile.png',
+  './screenshots/screenshot-wide.png'
 ];
 
 self.addEventListener('install', e => {
