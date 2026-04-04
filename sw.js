@@ -1,17 +1,19 @@
-const CACHE_NAME = 'cake-maker-v7';
+const CACHE_NAME = 'cake-maker-v8';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icons/icon-192x192.png',
   './icons/icon-512x512.png',
-  './img/cakes/strawberry.png','./img/cakes/choco.png','./img/cakes/vanilla.png','./img/cakes/blueberry.png',
-  './img/cakes/greentea.png','./img/cakes/redvelvet.png','./img/cakes/oreo.png','./img/cakes/carrot.png',
-  './img/candles/stripe.png','./img/candles/gold.png','./img/candles/mint.png','./img/candles/pink.png',
-  './img/candles/purple.png','./img/candles/rainbow.png','./img/candles/sky.png','./img/candles/coral.png','./img/candles/neon.png',
-  './img/backgrounds/pink.jpg','./img/backgrounds/sky.jpg','./img/backgrounds/lavender.jpg','./img/backgrounds/gold.jpg',
-  './img/backgrounds/mint.jpg','./img/backgrounds/party.jpg','./img/backgrounds/cloud.jpg','./img/backgrounds/rainbow.jpg',
-  './img/backgrounds/cherry.jpg','./img/backgrounds/space.jpg','./img/backgrounds/aurora.jpg','./img/backgrounds/sunset.jpg',
+  './img/cakes/strawberry.png','./img/cakes/choco.png','./img/cakes/strawberry_roll.png',
+  './img/cakes/rainbow.png','./img/cakes/carrot.png','./img/cakes/dubai.png','./img/cakes/mango.png',
+  './img/candles/red.png','./img/candles/orange.png','./img/candles/yellow.png','./img/candles/green.png',
+  './img/candles/skyblue.png','./img/candles/pink.png','./img/candles/purple.png',
+  './img/candles/Apricot.png','./img/candles/black.png','./img/candles/emerald.png',
+  './img/candles/light_purple.png','./img/candles/white.png',
+  './img/backgrounds/christmas1.png','./img/backgrounds/christmas2.png',
+  './img/backgrounds/bg_skyblue.png','./img/backgrounds/bg_pink.png',
+  './img/backgrounds/bg_lightyellow.png','./img/backgrounds/bg_lavender.png','./img/backgrounds/bg_mint.png',
   './img/toppings/cherry.svg'
 ];
 
