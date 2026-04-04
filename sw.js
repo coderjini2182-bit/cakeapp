@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cake-maker-v6';
+const CACHE_NAME = 'cake-maker-v7';
 const ASSETS = [
   './',
   './index.html',
@@ -11,7 +11,8 @@ const ASSETS = [
   './img/candles/purple.png','./img/candles/rainbow.png','./img/candles/sky.png','./img/candles/coral.png','./img/candles/neon.png',
   './img/backgrounds/pink.jpg','./img/backgrounds/sky.jpg','./img/backgrounds/lavender.jpg','./img/backgrounds/gold.jpg',
   './img/backgrounds/mint.jpg','./img/backgrounds/party.jpg','./img/backgrounds/cloud.jpg','./img/backgrounds/rainbow.jpg',
-  './img/backgrounds/cherry.jpg','./img/backgrounds/space.jpg','./img/backgrounds/aurora.jpg','./img/backgrounds/sunset.jpg'
+  './img/backgrounds/cherry.jpg','./img/backgrounds/space.jpg','./img/backgrounds/aurora.jpg','./img/backgrounds/sunset.jpg',
+  './img/toppings/cherry.svg'
 ];
 
 self.addEventListener('install', e => {
@@ -29,7 +30,6 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  // For navigation requests, always serve index.html
   if (e.request.mode === 'navigate') {
     e.respondWith(
       caches.match('./index.html').then(r => r || fetch(e.request))
