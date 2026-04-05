@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cake-maker-v11';
+const CACHE_NAME = 'cake-maker-v12';
 const ASSETS = [
   './',
   './index.html',
@@ -6,7 +6,7 @@ const ASSETS = [
   './icons/icon-192x192.png',
   './icons/icon-512x512.png',
   './img/cakes/strawberry.png','./img/cakes/choco.png','./img/cakes/strawberry_roll.png',
-  './img/cakes/rainbow.png','./img/cakes/carrot.png','./img/cakes/dubai.png','./img/cakes/mango.png',
+  './img/cakes/rainbow.png','./img/cakes/carrot.png','./img/cakes/dubai.png','./img/cakes/mango.png','./img/cakes/strawberry2.png',
   './img/candles/red.png','./img/candles/orange.png','./img/candles/yellow.png','./img/candles/green.png',
   './img/candles/skyblue.png','./img/candles/pink.png','./img/candles/purple.png',
   './img/candles/Apricot.png','./img/candles/black.png','./img/candles/emerald.png',
@@ -15,6 +15,7 @@ const ASSETS = [
   './img/backgrounds/bg_skyblue.png','./img/backgrounds/bg_pink.png',
   './img/backgrounds/bg_lightyellow.png','./img/backgrounds/bg_lavender.png','./img/backgrounds/bg_mint.png',
   './img/backgrounds/party1.png','./img/backgrounds/party2.png',
+  './img/backgrounds/part3.png','./img/backgrounds/part4.png',
   './img/toppings/cherry.svg'
 ];
 
