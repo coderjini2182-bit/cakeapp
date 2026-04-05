@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cake-maker-v8';
+const CACHE_NAME = 'cake-maker-v11';
 const ASSETS = [
   './',
   './index.html',
@@ -14,6 +14,7 @@ const ASSETS = [
   './img/backgrounds/christmas1.png','./img/backgrounds/christmas2.png',
   './img/backgrounds/bg_skyblue.png','./img/backgrounds/bg_pink.png',
   './img/backgrounds/bg_lightyellow.png','./img/backgrounds/bg_lavender.png','./img/backgrounds/bg_mint.png',
+  './img/backgrounds/party1.png','./img/backgrounds/party2.png',
   './img/toppings/cherry.svg'
 ];
 
