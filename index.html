@@ -12,11 +12,11 @@
 <link rel="apple-touch-icon" href="./icons/icon-192x192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;700;800&family=Pacifico&family=Gaegu&family=Jua&family=Black+Han+Sans&family=Do+Hyeon&family=Cute+Font&family=Gamja+Flower&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{height:100%;overflow-x:hidden;width:100%;max-width:100vw}
-body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;background:#FFF5F7;min-height:100%;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;max-width:100vw}
+html{height:100%;overflow-x:hidden;width:100%;max-width:100vw;overscroll-behavior-y:contain}
+body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;-webkit-text-size-adjust:100%;background:#FFF5F7;min-height:100%;overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;width:100%;max-width:100vw;overscroll-behavior-y:contain}
 .page{display:none;flex-direction:column;min-height:100vh;min-height:100dvh}.page.active{display:flex}
 
 /* ═══ HOME ═══ */
@@ -27,6 +27,7 @@ body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;-web
 .saved-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;min-height:80px}
 .saved-card{background:#fff;border:1.5px solid #f0e0e6;border-radius:16px;padding:14px;cursor:pointer;transition:all .18s;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
 .saved-card:active{transform:scale(.97);border-color:#e8547a}
+.saved-card .sc-thumb{width:56px;height:56px;object-fit:contain}
 .saved-card .sc-emoji{font-size:32px}
 .saved-card .sc-label{font-size:13px;font-weight:700;color:#444;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .saved-card .sc-msg{font-size:11px;color:#aaa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -130,11 +131,14 @@ body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;-web
 .toggle-label .t-title{font-size:14px;font-weight:700;color:#444}
 .toggle-label .t-desc{font-size:11px;color:#aaa;font-weight:500}
 .toggle-switch{position:relative;width:48px;height:28px;flex-shrink:0}
-.toggle-switch input{opacity:0;width:0;height:0}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
 .toggle-slider{position:absolute;cursor:pointer;inset:0;background:#ddd;border-radius:28px;transition:.3s}
 .toggle-slider:before{content:'';position:absolute;height:22px;width:22px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .toggle-switch input:checked+.toggle-slider{background:#e8547a}
 .toggle-switch input:checked+.toggle-slider:before{transform:translateX(20px)}
+.toggle-switch.sm{width:40px;height:24px}
+.toggle-switch.sm .toggle-slider:before{height:18px;width:18px;left:3px;bottom:3px}
+.toggle-switch.sm input:checked+.toggle-slider:before{transform:translateX(16px)}
 .bgm-file-row{margin-top:8px;padding:8px 12px;background:#fafafa;border-radius:10px;display:flex;align-items:center;gap:8px}
 .bgm-file-label{font-size:12px;color:#888;font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bgm-file-btn{padding:6px 14px;border:1.5px solid #e8547a;border-radius:8px;background:transparent;color:#e8547a;font-size:12px;font-weight:700;cursor:pointer;font-family:'Noto Sans KR',sans-serif;white-space:nowrap}
@@ -200,13 +204,11 @@ body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;-web
     <div class="panel-body">
       <!-- BG -->
       <div class="panel-section active" data-section="bg">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-          <p style="font-size:11px;color:#aaa;font-weight:600;margin:0">배경을 선택하세요</p>
-          <label style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#555;cursor:pointer">
-            <span>🔍 블러</span>
-            <label class="toggle-switch" style="width:40px;height:22px"><input type="checkbox" id="bgBlurToggle"><span class="toggle-slider" style="border-radius:22px"></span></label>
-          </label>
-        </div>
+        <p style="font-size:11px;color:#aaa;font-weight:600;margin:0 0 6px 0">배경을 선택하세요</p>
+        <label style="display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#555;cursor:pointer;margin-bottom:10px">
+          <span>🔍 블러</span>
+          <label class="toggle-switch sm"><input type="checkbox" id="bgBlurToggle"><span class="toggle-slider"></span></label>
+        </label>
         <div id="bgCategoryContainer"></div>
       </div>
       <!-- Cake -->
@@ -329,8 +331,14 @@ const fontFamilies=[
   {css:"'Noto Sans KR', sans-serif",label:'고딕'},
   {css:'Georgia, serif',label:'세리프'},
   {css:'monospace',label:'모노'},
+  {css:"'Gaegu', cursive",label:'개구'},
+  {css:"'Jua', sans-serif",label:'주아'},
+  {css:"'Black Han Sans', sans-serif",label:'한산스'},
+  {css:"'Do Hyeon', sans-serif",label:'도현'},
+  {css:"'Cute Font', cursive",label:'큐트'},
+  {css:"'Gamja Flower', cursive",label:'감자꽃'},
 ];
-const textColors=['#e8547a','#ffffff','#f9d71c','#4ecdc4','#9b59b6','#ff6b6b','#222222','#ff9ebc'];
+const textColors=['#e8547a','#ffffff','#f9d71c','#4ecdc4','#9b59b6','#ff6b6b','#222222','#ff9ebc','#ff6347','#00bfff','#32cd32','#ffd700','#ff69b4','#8b4513','#1e90ff','#ff4500','#2ecc71','#e74c3c','#3498db','#f39c12'];
 
 /* ═══ STATE ═══ */
 let selBg=0, selTextFont=0, selTextColor='#e8547a', bgBlur=false;
@@ -491,7 +499,7 @@ function addCakeToStage(idx){
   const stage=document.getElementById('editorStage');
   const vw=stage.offsetWidth,vh=stage.offsetHeight;
   const img=document.createElement('img');img.src=cakesData[idx].img;
-  const el=createDragObj('cake-obj',img,{width:420,height:420,left:vw/2-210,top:vh-500,zIndex:'1'});
+  const el=createDragObj('cake-obj',img,{width:420,height:420,left:vw/2-210,top:vh-560,zIndex:'1'});
   stage.appendChild(el);
   stageObjects.push({el,type:'cake',dataIdx:idx});
   selectObj(el);
@@ -712,6 +720,8 @@ function openEditor(savedCake){
     selBg=0;bgBlur=false;
     document.getElementById('editorBg').src=bgsData[0].img;
     applyBgBlur();
+    // 첫 번째 케이크 자동 선택
+    setTimeout(()=>{addCakeToStage(0);},50);
   }
   prevAllLit=true;
   buildAllPanels();
@@ -720,14 +730,20 @@ function openEditor(savedCake){
   // Viewing mode vs editing mode
   const sb=document.getElementById('saveBtn');
   const menuBtn=document.getElementById('editorMenuBtn');
+  const blowBtn=document.getElementById('blowBtn');
+  const lightBtn=document.getElementById('lightBtn');
   if(viewingCakeId){
     sb.style.display='none';
     menuBtn.style.display='none';
+    blowBtn.style.display='';
+    lightBtn.style.display='';
     // Make all objects non-interactive in view mode
     setTimeout(()=>{stageObjects.forEach(o=>{o.el.style.pointerEvents='none';o.el.style.cursor='default';});},50);
   }else{
     sb.style.display='';sb.textContent='💾 저장';sb.className='cake-ctrl save-btn';
     menuBtn.style.display='';
+    blowBtn.style.display='none';
+    lightBtn.style.display='none';
   }
 
   if(savedCake&&blowEnabled)startMic();
@@ -757,10 +773,12 @@ function buildSavedGrid(){
   if(saved.length===0){g.innerHTML='<div class="empty-msg" style="grid-column:1/-1">아직 저장된 케이크가 없어요<br>새 케이크를 만들어보세요!</div>';return;}
   saved.forEach((s,i)=>{
     const cakeObj=s.layout?.objects?.find(o=>o.type==='cake');
+    const cakeImg=cakeObj?cakesData[cakeObj.dataIdx]?.img:null;
     const emoji=cakeObj?cakesData[cakeObj.dataIdx]?.emoji||'🎂':'🎂';
     const textObj=s.layout?.objects?.find(o=>o.type==='text');
     const card=document.createElement('div');card.className='saved-card';
-    card.innerHTML=`<span class="sc-emoji">${emoji}</span><span class="sc-label">${s.label||'내 케이크 '+(i+1)}</span><span class="sc-msg">${textObj?.text||''}</span><span class="sc-del" data-i="${i}">×</span>`;
+    const thumbHtml=cakeImg?`<img class="sc-thumb" src="${cakeImg}" alt="">`:`<span class="sc-emoji">${emoji}</span>`;
+    card.innerHTML=`${thumbHtml}<span class="sc-label">${s.label||'내 케이크 '+(i+1)}</span><span class="sc-msg">${textObj?.text||''}</span><span class="sc-del" data-i="${i}">×</span>`;
     card.onclick=(e)=>{if(e.target.classList.contains('sc-del')){if(confirm('이 케이크를 삭제할까요?')){const arr=loadSaved();arr.splice(parseInt(e.target.dataset.i),1);saveSavedList(arr);buildSavedGrid();}return;}openEditor(s);};
     g.appendChild(card);
   });
