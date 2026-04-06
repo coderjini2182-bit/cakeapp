@@ -710,7 +710,17 @@ function restoreLayout(layout){
 }
 
 /* ═══ PAGE NAVIGATION ═══ */
-function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');}
+let currentPage='page-home';
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id!=='page-home'&&currentPage==='page-home'){history.pushState({page:id},'')}
+  currentPage=id;
+}
+window.addEventListener('popstate',()=>{
+  if(currentPage==='page-editor'){leaveEditor();showPage('page-home');buildSavedGrid();}
+  else if(currentPage==='page-effects'){saveFx();showPage('page-home');}
+});
 
 function clearStage(){
   const stage=document.getElementById('editorStage');
