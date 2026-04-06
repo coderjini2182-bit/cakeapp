@@ -1,4 +1,4 @@
-const CACHE_NAME = 'cake-maker-v12';
+const CACHE_NAME = 'cake-maker-v13';
 const ASSETS = [
   './',
   './index.html',
@@ -16,7 +16,11 @@ const ASSETS = [
   './img/backgrounds/bg_lightyellow.png','./img/backgrounds/bg_lavender.png','./img/backgrounds/bg_mint.png',
   './img/backgrounds/party1.png','./img/backgrounds/party2.png',
   './img/backgrounds/part3.png','./img/backgrounds/part4.png',
-  './img/toppings/cherry.svg'
+  './img/toppings/cherry.svg',
+  './bgm/delon_boomkin-happy-birthday-music-box-426283.mp3',
+  './bgm/scottishperson-sound-effect-longer-happy-birthday-music-box-361278.mp3',
+  './bgm/shidenbeatsmusic-happy-birthday-to-you-bossa-nova-style-arrangement-21399.mp3',
+  './bgm/twisterium-happy-birthday-482411.mp3'
 ];
 
 self.addEventListener('install', e => {
@@ -36,19 +40,20 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.mode === 'navigate') {
     e.respondWith(
-      caches.match('./index.html').then(r => r || fetch(e.request))
+      fetch(e.request).then(response => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+        return response;
+      }).catch(() => caches.match('./index.html'))
     );
     return;
   }
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      if (cached) return cached;
-      return fetch(e.request).then(response => {
-        if (!response || response.status !== 200 || response.type === 'opaque') return response;
-        const clone = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
-        return response;
-      });
-    }).catch(() => caches.match('./index.html'))
+    fetch(e.request).then(response => {
+      if (!response || response.status !== 200 || response.type === 'opaque') return response;
+      const clone = response.clone();
+      caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+      return response;
+    }).catch(() => caches.match(e.request))
   );
 });
