@@ -1,12 +1,15 @@
-const CACHE_NAME = 'cake-maker-v13';
+const CACHE_NAME = 'cake-maker-v14';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icons/icon-192x192.png',
   './icons/icon-512x512.png',
-  './img/cakes/strawberry.png','./img/cakes/choco.png','./img/cakes/strawberry_roll.png',
-  './img/cakes/rainbow.png','./img/cakes/carrot.png','./img/cakes/dubai.png','./img/cakes/mango.png','./img/cakes/strawberry2.png',
+  './img/cakes/2D/strawberry.png','./img/cakes/2D/choco.png','./img/cakes/2D/choco2.png','./img/cakes/2D/strawberry_roll.png',
+  './img/cakes/2D/rainbow.png','./img/cakes/2D/carrot.png','./img/cakes/2D/strawberry2.png',
+  './img/cakes/2D/whippedcream2.png','./img/cakes/2D/cheesecake.png','./img/cakes/2D/cookie.png','./img/cakes/2D/mandarin.png',
+  './img/cakes/2D/tiramisu.png',
+  './img/cakes/real/strawberry2.png','./img/cakes/real/whippedcream.png',
   './img/candles/red.png','./img/candles/orange.png','./img/candles/yellow.png','./img/candles/green.png',
   './img/candles/skyblue.png','./img/candles/pink.png','./img/candles/purple.png',
   './img/candles/Apricot.png','./img/candles/black.png','./img/candles/emerald.png',

@@ -219,7 +219,11 @@ body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;-web
       </div>
       <!-- Cake -->
       <div class="panel-section" data-section="cake">
-        <p style="font-size:11px;color:#aaa;margin-bottom:8px;font-weight:600">케이크를 선택하면 화면에 추가돼요 (1개)</p>
+        <p style="font-size:11px;color:#aaa;margin-bottom:4px;font-weight:600">케이크를 선택하면 화면에 추가돼요 (1개)</p>
+        <div class="cake-category-tabs" style="display:flex;gap:6px;margin-bottom:10px;">
+          <button class="cake-cat-btn active" data-cat="2D" style="flex:1;padding:6px 0;border:2px solid #ff85a2;border-radius:20px;background:#fff0f3;color:#ff85a2;font-size:12px;font-weight:800;cursor:pointer;font-family:'Noto Sans KR',sans-serif">🎨 2D</button>
+          <button class="cake-cat-btn" data-cat="real" style="flex:1;padding:6px 0;border:2px solid #ddd;border-radius:20px;background:#fff;color:#aaa;font-size:12px;font-weight:800;cursor:pointer;font-family:'Noto Sans KR',sans-serif">📷 실사</button>
+        </div>
         <div class="add-item-grid" id="cakePanelGrid"></div>
       </div>
       <!-- Candle -->
@@ -289,14 +293,22 @@ body{font-family:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;-web
 <script>
 /* ═══ DATA ═══ */
 const cakesData=[
-  {name:'딸기',img:'img/cakes/strawberry.png',emoji:'🍓'},
-  {name:'초코',img:'img/cakes/choco.png',emoji:'🍫'},
-  {name:'딸기 롤',img:'img/cakes/strawberry_roll.png',emoji:'🎂'},
-  {name:'무지개',img:'img/cakes/rainbow.png',emoji:'🌈'},
-  {name:'당근',img:'img/cakes/carrot.png',emoji:'🥕'},
-  {name:'두바이',img:'img/cakes/dubai.png',emoji:'🏙️'},
-  {name:'망고',img:'img/cakes/mango.png',emoji:'🥭'},
-  {name:'딸기2',img:'img/cakes/strawberry2.png',emoji:'🍓'},
+  {name:'딸기',img:'img/cakes/2D/strawberry.png',emoji:'🍓',category:'2D'},
+  {name:'초코',img:'img/cakes/2D/choco.png',emoji:'🍫',category:'2D'},
+  {name:'초코2',img:'img/cakes/2D/choco2.png',emoji:'🍫',category:'2D'},
+  {name:'딸기 롤',img:'img/cakes/2D/strawberry_roll.png',emoji:'🎂',category:'2D'},
+  {name:'무지개',img:'img/cakes/2D/rainbow.png',emoji:'🌈',category:'2D'},
+  {name:'당근',img:'img/cakes/2D/carrot.png',emoji:'🥕',category:'2D'},
+  {name:'딸기2',img:'img/cakes/2D/strawberry2.png',emoji:'🍓',category:'2D'},
+
+  {name:'생크림',img:'img/cakes/2D/whippedcream2.png',emoji:'🍰',category:'2D'},
+  {name:'치즈케이크',img:'img/cakes/2D/cheesecake.png',emoji:'🧀',category:'2D'},
+  {name:'쿠키',img:'img/cakes/2D/cookie.png',emoji:'🍪',category:'2D'},
+  {name:'귤',img:'img/cakes/2D/mandarin.png',emoji:'🍊',category:'2D'},
+  {name:'티라미수',img:'img/cakes/2D/tiramisu.png',emoji:'☕',category:'2D'},
+
+  {name:'딸기(실사)',img:'img/cakes/real/strawberry2.png',emoji:'🍓',category:'real'},
+  {name:'생크림(실사)',img:'img/cakes/real/whippedcream.png',emoji:'🍰',category:'real'},
 ];
 const candlesData=[
   {name:'빨강',img:'img/candles/red.png'},
@@ -363,7 +375,23 @@ loadFx();
 
 /* ═══ SAVED ═══ */
 const SAVED_KEY='cakemaker_saved';
-function loadSaved(){try{return JSON.parse(localStorage.getItem(SAVED_KEY))||[];}catch(e){return[];}}
+const OLD_IMG_MAP={'img/cakes/strawberry.png':'img/cakes/2D/strawberry.png','img/cakes/choco.png':'img/cakes/2D/choco.png','img/cakes/strawberry_roll.png':'img/cakes/2D/strawberry_roll.png','img/cakes/rainbow.png':'img/cakes/2D/rainbow.png','img/cakes/carrot.png':'img/cakes/2D/carrot.png','img/cakes/strawberry2.png':'img/cakes/2D/strawberry2.png','img/cakes/whippedcream.png':'img/cakes/real/whippedcream.png','img/cakes/dubai.png':'img/cakes/2D/strawberry.png','img/cakes/mango.png':'img/cakes/2D/strawberry.png'};
+function migrateSaved(arr){
+  let changed=false;
+  arr.forEach(s=>{if(!s.layout||!s.layout.objects)return;s.layout.objects.forEach(o=>{
+    if(o.type==='cake'){
+      const cur=cakesData[o.dataIdx];
+      if(cur&&OLD_IMG_MAP[cur.img]){/* dataIdx still valid but img changed — shouldn't happen */}
+      else if(!cur||!cakesData.some(c=>c.img===cur?.img)){
+        // dataIdx out of range or points to removed item — try to find by old path
+        const oldImg=Object.keys(OLD_IMG_MAP).find(k=>{const oldArr=['img/cakes/strawberry.png','img/cakes/choco.png','img/cakes/strawberry_roll.png','img/cakes/rainbow.png','img/cakes/carrot.png','img/cakes/dubai.png','img/cakes/mango.png','img/cakes/strawberry2.png'];return oldArr[o.dataIdx]===k;});
+        if(oldImg){const newImg=OLD_IMG_MAP[oldImg];const ni=cakesData.findIndex(c=>c.img===newImg);if(ni>=0){o.dataIdx=ni;changed=true;}}
+      }
+    }
+  });});
+  return changed;
+}
+function loadSaved(){try{const arr=JSON.parse(localStorage.getItem(SAVED_KEY))||[];if(migrateSaved(arr))saveSavedList(arr);return arr;}catch(e){return[];}}
 function saveSavedList(a){localStorage.setItem(SAVED_KEY,JSON.stringify(a));}
 
 /* ═══ PRELOAD ═══ */
@@ -595,15 +623,24 @@ function buildBgSwiper(){
   bt.onchange=function(){bgBlur=this.checked;applyBgBlur();};
 }
 function applyBgBlur(){const el=document.getElementById('editorBg');if(bgBlur)el.classList.add('blurred');else el.classList.remove('blurred');}
+let cakeCat='2D';
 function buildCakePanel(){
   const g=document.getElementById('cakePanelGrid');g.innerHTML='';
   cakesData.forEach((c,i)=>{
+    if(c.category!==cakeCat)return;
     const b=document.createElement('button');b.className='add-item-btn';
     const im=document.createElement('img');im.src=c.img;
     const sp=document.createElement('span');sp.textContent=c.name;
     b.appendChild(im);b.appendChild(sp);
     b.onclick=()=>{addCakeToStage(i);closePanel();};
     g.appendChild(b);
+  });
+  document.querySelectorAll('.cake-cat-btn').forEach(btn=>{
+    const active=btn.dataset.cat===cakeCat;
+    btn.style.border=active?'2px solid #ff85a2':'2px solid #ddd';
+    btn.style.background=active?'#fff0f3':'#fff';
+    btn.style.color=active?'#ff85a2':'#aaa';
+    btn.onclick=()=>{cakeCat=btn.dataset.cat;buildCakePanel();};
   });
 }
 function buildCandlePanel(){
